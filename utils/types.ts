@@ -28,7 +28,7 @@ interface Areas {
 type PartialArea = Pick<Area, 'id' | 'name' | 'code' | 'flag'>
 
 interface Competition {
-  area: PartialArea
+  area?: PartialArea
   id: number
   name: string
   code: string
@@ -60,7 +60,7 @@ interface Season {
 }
 
 interface CompetitionStandings {
-  area: PartialArea
+  area?: PartialArea
   competition: PartialCompetition
   season: Season
   standings: {
@@ -114,7 +114,7 @@ interface CompetitionTeams {}
 interface CompetitionScorers {}
 
 interface Match {
-  area: PartialArea
+  area?: PartialArea
   competition: PartialCompetition
   season: Season
   id: number
@@ -253,7 +253,7 @@ interface Referee {
 }
 
 interface Team {
-  area: PartialArea
+  area?: PartialArea
   id: string
   name: string
   shortName: string
@@ -264,16 +264,17 @@ interface Team {
   founded: number
   clubColors: string
   venue: string
-  runningCompetitions: Competition[]
-  coach: TeamCoach
+  runningCompetitions?: Competition[]
+  coach?: TeamCoach
   marketValue: number | null
-  squad: TeamPlayer[]
-  staff: TeamStaff[]
+  squad?: TeamPlayer[]
+  staff?: TeamStaff[]
   lastUpdated: string
 }
 
 interface Teams {
-  teams: Team
+  count: number
+  teams: Team[]
 }
 
 interface Competition {
@@ -305,7 +306,7 @@ interface TeamPlayer {
   position: string
   dateOfBirth: string
   nationality: string
-  shirtNumber: number
+  shirtNumber?: number
   marketValue: number | null
   contract: {
     start: string
