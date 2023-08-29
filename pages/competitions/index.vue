@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const query = useQueryFilter(route => ({ areas: ids(route.query.areas) }))
+const query = useQueryFilter(route => ({
+  areas: filters.ids(route.query.areas),
+}))
 const areas = useAreas()
 const { data } = useCompetitions(query)
 
@@ -12,8 +14,8 @@ function onChange(e: Event) {
 <template>
   <h1>competitions</h1>
   <h2>filter</h2>
-  <form>
-    <select name="areas" id="areas" @change="onChange">
+  <form id="filter" @submit.prevent="">
+    <select :value="query.areas?.[0]" name="areas" id="areas" @change="onChange">
       <option
         v-for="area in areas.data.value?.areas"
         :key="area.id"

@@ -8,7 +8,7 @@ const { data } = useTeam(id)
   <template v-if="data">
     <hgroup>
       <h1>Team: {{ data.name }} ({{ data.founded }})</h1>
-      <img :src="data.crest" alt="crest" />
+      <img id="crest" :src="data.crest" alt="crest" />
     </hgroup>
     <h2 id="details">
       Details
@@ -35,6 +35,29 @@ const { data } = useTeam(id)
       </li>
       <li>Colors: {{ data.clubColors }}</li>
     </ul>
+    <h2 id="toc">
+      Table of contents
+      <NuxtLink to="#toc">#</NuxtLink>
+    </h2>
+    <nav>
+      <ol>
+        <li>
+          <NuxtLink to="#matches">Matches</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="#running">Running</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="#squad">Squad</NuxtLink>
+        </li>
+        <li>
+          <NuxtLink to="#staff">Staff</NuxtLink>
+        </li>
+      </ol>
+    </nav>
+    <h2 id="matches">
+      <NuxtLink :to="`/teams/${data.id}/matches`">Matches</NuxtLink>
+    </h2>
     <h2 id="running">Running</h2>
     <table>
       <thead>
@@ -73,7 +96,11 @@ const { data } = useTeam(id)
       <tbody>
         <tr v-for="row in data.squad" :key="row.id">
           <td>{{ row.id }}</td>
-          <td>{{ row.name }}</td>
+          <td>
+            <NuxtLink :to="`/persons/${row.id}`">
+              {{ row.name }}
+            </NuxtLink>
+          </td>
           <td>{{ row.nationality }}</td>
           <td>{{ row.position }}</td>
           <td>{{ row.shirtNumber ?? '-' }}</td>
@@ -107,6 +134,9 @@ const { data } = useTeam(id)
 </template>
 
 <style scoped>
+#crest {
+  height: 10rem;
+}
 .flag {
   display: inline;
   height: 1rem;

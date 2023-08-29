@@ -182,12 +182,12 @@ interface MatchScore {
   winner: string
   duration: string
   fullTime: {
-    home: number
-    away: number
+    home: number | null
+    away: number | null
   }
   halfTime: {
-    home: number
-    away: number
+    home: number | null
+    away: number | null
   }
 }
 
@@ -254,7 +254,7 @@ interface Referee {
 
 interface Team {
   area?: PartialArea
-  id: string
+  id: number
   name: string
   shortName: string
   tla: string

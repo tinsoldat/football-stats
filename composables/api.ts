@@ -19,13 +19,16 @@ export function useCompetition(id: MaybeRef<number>) {
     computed(() => `/competitions/${isRef(id) ? id.value : id}`)
   )
 }
-export function useCompetitions(params: Ref<{ areas: number[] }>) {
-  console.log(params)
+export function useCompetitions(
+  params?: MaybeRef<undefined | Partial<{ areas: number[] }>>
+) {
   return useBaseFetch<Competitions>(`/competitions`, { params })
 }
 export function useCompetitionStandings(
   id: MaybeRef<number>,
-  params: Ref<{ matchday: number; season: number; date: Date }>
+  params?: MaybeRef<
+    undefined | Partial<{ matchday: number; season: number; date: string }>
+  >
 ) {
   return useBaseFetch<CompetitionStandings>(
     computed(() => `competitions/${isRef(id) ? id.value : id}/standings`),
@@ -36,15 +39,18 @@ export function useCompetitionStandings(
 }
 export function useCompetitionMatches(
   id: MaybeRef<number>,
-  params: Ref<{
-    dateFrom: Date
-    dateTo: Date
-    stage: string[]
-    status: string[]
-    matchday: number
-    group: string
-    season: number
-  }>
+  params?: MaybeRef<
+    | undefined
+    | Partial<{
+        dateFrom: string
+        dateTo: string
+        stage: string[]
+        status: string[]
+        matchday: number
+        group: string
+        season: number
+      }>
+  >
 ) {
   return useBaseFetch<CompetitionMatches>(
     computed(() => `competitions/${isRef(id) ? id.value : id}/matches`),
@@ -55,7 +61,7 @@ export function useCompetitionMatches(
 }
 export function useCompetitionTeams(
   id: MaybeRef<number>,
-  params: Ref<{ season: number }>
+  params?: MaybeRef<undefined | Partial<{ season: number }>>
 ) {
   return useBaseFetch<CompetitionTeams>(
     computed(() => `/competitions/${isRef(id) ? id.value : id}/teams`),
@@ -66,7 +72,7 @@ export function useCompetitionTeams(
 }
 export function useCompetitionScorers(
   id: MaybeRef<number>,
-  params: Ref<{ limit: number; season: number }>
+  params?: MaybeRef<undefined | Partial<{ limit: number; season: number }>>
 ) {
   return useBaseFetch<CompetitionScorers>(
     computed(() => `/competitions/${isRef(id) ? id.value : id}/scorers`),
@@ -80,20 +86,25 @@ export function useTeam(id: MaybeRef<number>) {
     computed(() => `/teams/${isRef(id) ? id.value : id}`)
   )
 }
-export function useTeams(params: Ref<{ limit: number; offset: number }>) {
+export function useTeams(
+  params?: MaybeRef<undefined | Partial<{ limit: number; offset: number }>>
+) {
   return useBaseFetch<Teams>(`/teams`, { params })
 }
 export function useTeamMatches(
   id: MaybeRef<number>,
-  params: Ref<{
-    dateFrom: Date
-    dateTo: Date
-    season: number
-    competitions: number[]
-    status: string
-    venue: string
-    limit: number
-  }>
+  params?: MaybeRef<
+    | undefined
+    | Partial<{
+        dateFrom: string
+        dateTo: string
+        season: number
+        competitions: number[]
+        status: string
+        venue: string
+        limit: number
+      }>
+  >
 ) {
   return useBaseFetch<Matches>(
     computed(() => `/teams/${isRef(id) ? id.value : id}/matches`),
@@ -107,14 +118,17 @@ export function usePerson(id: MaybeRef<number>) {
 }
 export function usePersonMatches(
   id: MaybeRef<number>,
-  params: Ref<{
-    dateFrom: Date
-    dateTo: Date
-    status: string
-    competitions: number[]
-    limit: number
-    offset: number
-  }>
+  params?: MaybeRef<
+    | undefined
+    | Partial<{
+        dateFrom: string
+        dateTo: string
+        status: string
+        competitions: number[]
+        limit: number
+        offset: number
+      }>
+  >
 ) {
   return useBaseFetch<PersonMatches>(
     computed(() => `/persons/${isRef(id) ? id.value : id}/matches`),
@@ -127,24 +141,30 @@ export function useMatch(id: MaybeRef<number>) {
   )
 }
 export function useMatches(
-  params: Ref<{
-    competitions: number[]
-    ids: number[]
-    dateFrom: Date
-    dateTo: Date
-    status: string
-  }>
+  params?: MaybeRef<
+    | undefined
+    | Partial<{
+        competitions: number[]
+        ids: number[]
+        dateFrom: string
+        dateTo: string
+        status: string
+      }>
+  >
 ) {
   return useBaseFetch<Matches>(`/matches/`, { params })
 }
 export function useMatchHeadToHead(
   id: MaybeRef<number>,
-  params: Ref<{
-    limit: number
-    dateFrom: Date
-    dateTo: Date
-    competitions: number[]
-  }>
+  params?: MaybeRef<
+    | undefined
+    | Partial<{
+        limit: number
+        dateFrom: string
+        dateTo: string
+        competitions: number[]
+      }>
+  >
 ) {
   return useBaseFetch<MatchHeadToHead>(
     computed(() => `/matches/${isRef(id) ? id.value : id}/head2head`),

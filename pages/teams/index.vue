@@ -3,8 +3,8 @@ const route = useRoute()
 const router = useRouter()
 
 const query = useQueryFilter(route => ({
-  limit: limit(route.query.limit),
-  offset: offset(route.query.offset),
+  limit: filters.limit(route.query.limit),
+  offset: filters.offset(route.query.offset),
 }))
 const { data } = useTeams(query)
 
@@ -61,28 +61,29 @@ function onPageSize(e: Event) {
       </tr>
     </tbody>
   </table>
-  <nav>
+  <nav id="pagination">
+    <span
+      >Showing {{ query.offset + 1 }} - {{ query.offset + query.limit }}</span
+    >
     <label for="page-size">Page size:</label>
     <select name="page-size" id="page-size" @change="onPageSize">
       <option value="12">12</option>
       <option value="24">24</option>
       <option value="48">48</option>
     </select>
-    <NuxtLink :to="`/teams?limit=${query.limit}`">first</NuxtLink>
+    <NuxtLink v-if="query.offset > 0" :to="`/teams?limit=${query.limit}`"
+      >first</NuxtLink
+    >
+    <span v-else>first</span>
     <NuxtLink
+      v-if="query.offset > 0"
       :to="`/teams?offset=${query.offset + query.limit}&limit=${query.limit}`"
       >prev</NuxtLink
     >
+    <span v-else>prev</span>
     <NuxtLink
       :to="`/teams?offset=${query.offset + query.limit}&limit=${query.limit}`"
       >next</NuxtLink
-    >
-    <NuxtLink
-      :to="`/teams?offset=${Math.max(
-        (data?.count || 0) - query.limit,
-        0
-      )}&limit=${query.limit}`"
-      >last</NuxtLink
     >
   </nav>
 </template>
@@ -91,5 +92,10 @@ function onPageSize(e: Event) {
 .crest {
   width: 1rem;
   aspect-ratio: 1;
+}
+
+#pagination {
+  display: flex;
+  gap: 4px;
 }
 </style>
