@@ -6,7 +6,6 @@ const query = useQueryFilter(route => ({
   limit: limit(route.query.limit),
   offset: offset(route.query.offset),
 }))
-
 const { data } = useTeams(query)
 
 function onPageSize(e: Event) {
