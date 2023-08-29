@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
-const id = computed(() => Number(route.params.id as string))
-const { data } = useCompetition(id)
+const _id = computed(() => id(route.params.id))
+const { data, pending, error } = useCompetition(_id)
 </script>
 
 <template>
@@ -76,13 +76,15 @@ const { data } = useCompetition(id)
     </table>
     <span>Last update: {{ data.lastUpdated }}</span>
   </template>
+  <template v-if="pending"> Loading... </template>
+  <template v-if="error"> An error occured: This is probably due to the API not allowing CORS. {{ String(error) }} </template>
 </template>
 
 <style scoped>
 .emblem {
-  height: 1rem;
+  height: 3rem;
 }
 .flag {
-  height: 1rem;
+  height: 3rem;
 }
 </style>

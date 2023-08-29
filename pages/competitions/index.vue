@@ -1,18 +1,11 @@
 <script setup lang="ts">
-const route = useRoute()
-const router = useRouter()
-const query = computed(() => {
-  const areas = route.query.areas ?? ''
-  const arr =
-    typeof areas === 'string' ? areas.split(',') : areas?.join().split(',')
-  return { areas: arr.filter(v => /\d+/.test(v)).map(Number) }
-})
+const query = useQueryFilter(route => ({ areas: ids(route.query.areas) }))
 const areas = useAreas()
 const { data } = useCompetitions(query)
 
 function onChange(e: Event) {
   const value = (e.target as HTMLSelectElement).value
-  router.push({ query: { areas: value } })
+  navigateTo({ query: { areas: value } })
 }
 </script>
 
@@ -54,7 +47,7 @@ function onChange(e: Event) {
         <td>{{ row.code }}</td>
         <td>{{ row.type }}</td>
         <td>{{ row.plan }}</td>
-        <td>{{ row.area.name }}</td>
+        <td>{{ row.area?.name }}</td>
       </tr>
     </tbody>
   </table>

@@ -6,32 +6,36 @@ export const useBaseFetch: typeof useFetch = (request, opts) => {
     baseURL: config.public?.baseURL as string | undefined,
   })
 }
-export function useArea(id: Ref<number>) {
-  return useBaseFetch<Area>(computed(() => `/areas/${id.value}`))
+export function useArea(id: MaybeRef<number>) {
+  return useBaseFetch<Area>(
+    computed(() => `/areas/${isRef(id) ? id.value : id}`)
+  )
 }
 export function useAreas() {
   return useBaseFetch<Areas>(`/areas/`)
 }
-export function useCompetition(id: Ref<number>) {
-  return useBaseFetch<Competition>(computed(() => `/competitions/${id.value}`))
+export function useCompetition(id: MaybeRef<number>) {
+  return useBaseFetch<Competition>(
+    computed(() => `/competitions/${isRef(id) ? id.value : id}`)
+  )
 }
 export function useCompetitions(params: Ref<{ areas: number[] }>) {
   console.log(params)
   return useBaseFetch<Competitions>(`/competitions`, { params })
 }
 export function useCompetitionStandings(
-  id: Ref<number>,
+  id: MaybeRef<number>,
   params: Ref<{ matchday: number; season: number; date: Date }>
 ) {
   return useBaseFetch<CompetitionStandings>(
-    computed(() => `competitions/${id.value}/standings`),
+    computed(() => `competitions/${isRef(id) ? id.value : id}/standings`),
     {
       params,
     }
   )
 }
 export function useCompetitionMatches(
-  id: Ref<number>,
+  id: MaybeRef<number>,
   params: Ref<{
     dateFrom: Date
     dateTo: Date
@@ -43,42 +47,44 @@ export function useCompetitionMatches(
   }>
 ) {
   return useBaseFetch<CompetitionMatches>(
-    computed(() => `competitions/${id.value}/matches`),
+    computed(() => `competitions/${isRef(id) ? id.value : id}/matches`),
     {
       params,
     }
   )
 }
 export function useCompetitionTeams(
-  id: Ref<number>,
+  id: MaybeRef<number>,
   params: Ref<{ season: number }>
 ) {
   return useBaseFetch<CompetitionTeams>(
-    computed(() => `/competitions/${id.value}/teams`),
+    computed(() => `/competitions/${isRef(id) ? id.value : id}/teams`),
     {
       params,
     }
   )
 }
 export function useCompetitionScorers(
-  id: Ref<number>,
+  id: MaybeRef<number>,
   params: Ref<{ limit: number; season: number }>
 ) {
   return useBaseFetch<CompetitionScorers>(
-    computed(() => `/competitions/${id.value}/scorers`),
+    computed(() => `/competitions/${isRef(id) ? id.value : id}/scorers`),
     {
       params,
     }
   )
 }
-export function useTeam(id: Ref<number>) {
-  return useBaseFetch<Team>(computed(() => `/teams/${id.value}`))
+export function useTeam(id: MaybeRef<number>) {
+  return useBaseFetch<Team>(
+    computed(() => `/teams/${isRef(id) ? id.value : id}`)
+  )
 }
 export function useTeams(params: Ref<{ limit: number; offset: number }>) {
   return useBaseFetch<Teams>(`/teams`, { params })
 }
 export function useTeamMatches(
-  id: Ref<number>,
+  id: MaybeRef<number>,
   params: Ref<{
     dateFrom: Date
     dateTo: Date
@@ -90,15 +96,17 @@ export function useTeamMatches(
   }>
 ) {
   return useBaseFetch<Matches>(
-    computed(() => `/teams/${id.value}/matches`),
+    computed(() => `/teams/${isRef(id) ? id.value : id}/matches`),
     { params }
   )
 }
-export function usePerson(id: Ref<number>) {
-  return useBaseFetch<Person>(computed(() => `/persons/${id.value}`))
+export function usePerson(id: MaybeRef<number>) {
+  return useBaseFetch<Person>(
+    computed(() => `/persons/${isRef(id) ? id.value : id}`)
+  )
 }
 export function usePersonMatches(
-  id: Ref<number>,
+  id: MaybeRef<number>,
   params: Ref<{
     dateFrom: Date
     dateTo: Date
@@ -109,12 +117,14 @@ export function usePersonMatches(
   }>
 ) {
   return useBaseFetch<PersonMatches>(
-    computed(() => `/persons/${id.value}/matches`),
+    computed(() => `/persons/${isRef(id) ? id.value : id}/matches`),
     { params }
   )
 }
-export function useMatch(id: Ref<number>) {
-  return useBaseFetch<Match>(computed(() => `/matches/${id.value}`))
+export function useMatch(id: MaybeRef<number>) {
+  return useBaseFetch<Match>(
+    computed(() => `/matches/${isRef(id) ? id.value : id}`)
+  )
 }
 export function useMatches(
   params: Ref<{
@@ -128,7 +138,7 @@ export function useMatches(
   return useBaseFetch<Matches>(`/matches/`, { params })
 }
 export function useMatchHeadToHead(
-  id: Ref<number>,
+  id: MaybeRef<number>,
   params: Ref<{
     limit: number
     dateFrom: Date
@@ -137,7 +147,7 @@ export function useMatchHeadToHead(
   }>
 ) {
   return useBaseFetch<MatchHeadToHead>(
-    computed(() => `/matches/${id.value}/head2head`),
+    computed(() => `/matches/${isRef(id) ? id.value : id}/head2head`),
     {
       params,
     }

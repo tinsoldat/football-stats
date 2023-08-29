@@ -1,11 +1,12 @@
 <script setup lang="ts">
 const route = useRoute()
 const router = useRouter()
-const query = computed(() => {
-  const limit = Number(route.query.limit) || 12
-  const offset = Number(route.query.offset) || 0
-  return { limit, offset }
-})
+
+const query = useQueryFilter(route => ({
+  limit: limit(route.query.limit),
+  offset: offset(route.query.offset),
+}))
+
 const { data } = useTeams(query)
 
 function onPageSize(e: Event) {
