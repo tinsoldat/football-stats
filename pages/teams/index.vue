@@ -86,10 +86,6 @@ function onPageSize(e: Event) {
       >last</NuxtLink
     >
   </nav>
-  <pre>
-
-    {{ JSON.stringify(data?.teams, null, 2) }}
-  </pre>
 </template>
 
 <style scoped>
